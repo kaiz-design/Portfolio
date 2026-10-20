@@ -53,12 +53,14 @@ b, strong { font-weight: 500; }
 .band { background: var(--bg-01); color: var(--text-01); }
 footer.band { color: var(--text-02); }
 .band a { color: var(--text-01); }
-.stack { display: grid; gap: 144px; padding-block: 72px 144px; }
+.stack { display: grid; gap: 96px; padding-block: 72px 144px; }
+@media (max-width: 640px) { .stack { gap: 64px; padding-top: 40px; } }
 section { display: grid; gap: 32px; }
 .measure { max-width: 760px; }
 
 /* Hero */
-.hero .wrap { display: grid; gap: 24px; padding-block: 72px 24px; }
+.hero .wrap { display: grid; gap: 24px; padding-block: 72px 24px; padding-top: max(72px, calc(40vh - 69px)); padding-top: max(72px, calc(40svh - 69px)); } /* name sits at 40% of screen height (61px top menu + 8px offset) */
+@media (max-width: 640px) { .hero .wrap { padding-top: max(24px, calc(20vh - 61px)); padding-top: max(24px, calc(20svh - 61px)); } } /* 20% on phones */
 .hero .wrap > h1 + .lead { margin-top: -8px; } /* 16px between name and role */
 .hero .lead { display: grid; gap: 16px; max-width: 760px; }
 .links { display: flex; flex-wrap: wrap; gap: 12px 32px; }
@@ -68,6 +70,9 @@ section { display: grid; gap: 32px; }
   border-bottom: 1px solid color-mix(in srgb, var(--text-01) 30%, transparent);
 }
 .links a:hover, .links button:hover { border-bottom-color: var(--text-01); }
+.links a, .links button, .back { position: relative; }
+.links a::before, .links button::before { content: ""; position: absolute; inset: -9px -4px -8px; }
+.back::before { content: ""; position: absolute; inset: -12px -8px; }
 
 /* Section heads */
 .eyebrow { color: var(--text-02); }
@@ -109,6 +114,8 @@ a.row:hover .go { transform: translateX(6px); }
 .car-ctrl { display: flex; align-items: center; gap: 16px; }
 .quote-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .car-btn { background: none; border: 0; padding: 4px 8px; margin: -4px -8px; font: inherit; color: var(--text-01); cursor: pointer; }
+.car-btn { position: relative; }
+.car-btn::before { content: ""; position: absolute; inset: -7px -7px; }
 .car-btn:disabled { color: var(--text-02); cursor: default; }
 @media (prefers-reduced-motion: reduce) { .track { scroll-behavior: auto; } }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
@@ -127,7 +134,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .back { color: var(--text-02); text-decoration: none; }
 .back:hover { color: var(--text-01); }
 .cs-hero .wrap { display: grid; gap: 24px; padding-block: 72px 0; }
-.cs-hero + main.stack { padding-top: 80px; gap: 80px; }
+.cs-hero + main.stack { padding-top: 80px; gap: 96px; }
+@media (max-width: 640px) { .cs-hero + main.stack { padding-top: 64px; gap: 64px; } }
 .cs-hero + main.stack > .next { margin-top: 16px; }
 .cs-hero .back { color: var(--text-02); }
 .cs-hero .back:hover { color: var(--text-01); }
@@ -145,8 +153,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .cv-item { display: grid; gap: 12px; }
 .cv-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
 .cv-head h3, .cv-head p, .cv-item h3, .cv-item p { margin: 0; }
-.cv-head .p3 { white-space: nowrap; }
-.cv ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.cv-head > .p3 { white-space: nowrap; }
+.cv-head > .p3:last-child { color: var(--text-02); }
+.cv ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 12px; }
 @media (max-width: 640px) { .cv { grid-template-columns: 1fr; gap: 16px; } .cv-head { flex-direction: column; gap: 0; } }
 .principles { display: grid; gap: 48px; max-width: 760px; }
 .principles > div { display: grid; gap: 16px; }
@@ -158,7 +167,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .shot { display: grid; gap: 12px; }
 .phase > div p { margin: 0; }
 .img-slot { aspect-ratio: 16 / 9; border-radius: 4px; background: color-mix(in srgb, var(--text-01) 5%, transparent); display: grid; place-items: center; color: var(--text-02); }
-.shot img { width: 100%; max-width: 100%; display: block; border-radius: 4px; background: var(--bg-01); }
+.shot img { width: 100%; max-width: 100%; height: auto; display: block; border-radius: 4px; background: var(--bg-01); }
 .shot.narrow { max-width: 760px; }
 .shot figcaption { color: var(--text-01); max-width: 760px; }
 .nums { display: grid; grid-template-columns: 228px 264px minmax(0, 1fr); gap: 12px; }
@@ -220,12 +229,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg-01); font-size: 14px; line-height: 21px; color: var(--text-01); }
 .topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 16px; }
 .topnav .mark { font-weight: 500; text-decoration: none; white-space: nowrap; }
-.topnav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.topnav ul { list-style: none; margin: 0 -8px; padding: 0 8px; display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
 .topnav ul::-webkit-scrollbar { display: none; }
-.topnav li a { color: var(--text-01); text-decoration: none; white-space: nowrap; padding-block: 4px; }
+.topnav li a { color: var(--text-02); text-decoration: none; white-space: nowrap; display: inline-block; padding: 12px 8px; margin: -8px -8px; transition: color .15s ease-out; }
+.topnav li a:hover { color: var(--text-01); }
 .topnav li a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.topnav li a[aria-current="true"] { color: var(--text-01); font-weight: 500; }
-@media (max-width: 640px) { .topnav ul { gap: 20px; } }
+.topnav li a[aria-current="true"] { color: var(--text-01); }
+.menu-btn { display: none; }
+@media (max-width: 640px) {
+  .topnav .wrap { position: relative; }
+  .menu-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -12px -12px -12px 0; padding: 0; background: none; border: 0; color: var(--text-01); cursor: pointer; }
+  .menu-btn span { grid-area: 1 / 1; display: block; width: 18px; height: 1.5px; background: currentColor; transition: transform .2s ease-out; }
+  .menu-btn span:first-child { transform: translateY(-3.5px); }
+  .menu-btn span:last-child { transform: translateY(3.5px); }
+  .topnav.open .menu-btn span:first-child { transform: rotate(45deg); }
+  .topnav.open .menu-btn span:last-child { transform: rotate(-45deg); }
+  .topnav ul { position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 0 max(24px, env(safe-area-inset-left, 0px)) 16px; flex-direction: column; gap: 0; overflow: visible; background: var(--bg-01); visibility: hidden; opacity: 0; transform: translateY(-4px); transition: opacity .15s ease-out, transform .15s ease-out, visibility 0s linear .15s; }
+  .topnav.open ul { visibility: visible; opacity: 1; transform: none; transition: opacity .15s ease-out, transform .15s ease-out; }
+  .topnav li a { display: block; padding: 12px 0; margin: 0; }
+}
 [id="now"], [id="work"], [id="experience"], [id="testimonials"], [id="life"] { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
 
 /* View switching */
@@ -233,7 +255,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .view.enter .anim:nth-of-type(2) { animation-delay: .05s; }
 @keyframes rise { from { opacity: .001; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .view.enter .anim { animation: none; } * { transition: none !important; } }
-.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 12px); background: var(--bg-01); color: var(--text-01); border: 1px solid var(--line); padding: 10px 18px; border-radius: 4px; opacity: 0; transition: .2s ease; pointer-events: none; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 12px); background: var(--bg-01); color: var(--text-01); border: 1px solid var(--line); padding: 10px 18px; border-radius: 4px; opacity: 0; transition: opacity .2s ease-out, transform .2s ease-out; pointer-events: none; }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 </style>
 
@@ -241,7 +263,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <nav class="topnav p2" aria-label="Sections">
   <div class="wrap">
     <a class="mark" href="#">KAIQI ZHU</a>
-    <ul>
+    <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-list"><span></span><span></span></button>
+    <ul id="nav-list">
       <li><a href="#about" data-sec="about">About</a></li>
       <li><a href="#work" data-sec="work">Projects</a></li>
       <li><a href="#testimonials" data-sec="testimonials">Testimonials</a></li>
@@ -289,7 +312,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     
     <section id="testimonials" aria-labelledby="h-quotes">
       <div class="quote-head"><div class="sec-head"><h2 class="h5" id="h-quotes">From collaborators</h2></div>
-        <div class="car-ctrl p2">
+        <div class="car-ctrl p3">
         <button type="button" class="car-btn" id="quote-prev" aria-label="Previous testimonial">←</button>
         <span class="num" id="quote-count" aria-live="polite">1 / 4</span>
         <button type="button" class="car-btn" id="quote-next" aria-label="Next testimonial">→</button>
@@ -351,8 +374,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div><dt class="p2">Timeline</dt><dd class="p2">Spring: March 2026, Fall: Sept 2026</dd></div>
     </dl>
 
-    <figure class="shot"><img src="img/spotlight-fall26.jpg" alt="Fall 2026 Spotlight hero: Growth context knows your business, with customer, team and business context cards" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight" target="_blank" rel="noopener">View site →</a></figcaption></figure>
-    <figure class="shot"><img src="img/spotlight-spring26.jpg" alt="Spring 2026 Spotlight desktop page: The context advantage, with goal navigation, update carousel and video" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight/spring2026?hubs_content=www.hubspot.com%2Fspotlight&amp;hubs_content-cta=editions-menu-link" target="_blank" rel="noopener">View site →</a></figcaption></figure>
+    <figure class="shot"><img src="img/spotlight-fall26.jpg" width="1440" height="800" alt="Fall 2026 Spotlight hero: Growth context knows your business, with customer, team and business context cards" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight" target="_blank" rel="noopener">View site →</a></figcaption></figure>
+    <figure class="shot"><img src="img/spotlight-spring26.jpg" width="1600" height="900" alt="Spring 2026 Spotlight desktop page: The context advantage, with goal navigation, update carousel and video" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight/spring2026?hubs_content=www.hubspot.com%2Fspotlight&amp;hubs_content-cta=editions-menu-link" target="_blank" rel="noopener">View site →</a></figcaption></figure>
   </main>
 </article>
 
@@ -376,20 +399,20 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <h2 class="h5">Build the System (2022)</h2>
       <p class="p2">Introduced the token system and built the design system foundation, migrated the team to Figma, and supported the 2022 rebrand.</p>
       <p class="links p2"><a href="https://www.figma.com/deck/wJ1kE4p0n2UdeKqHWjIARx" target="_blank" rel="noopener">See details →</a></p>
-      <figure class="shot"><img src="img/ds-2022.jpg" alt="Design system documentation pages for design tokens, alias font and color tokens, color guidelines, border radius and accordion" loading="lazy"></figure>
+      <figure class="shot"><img src="img/ds-2022.jpg" width="1600" height="685" alt="Design system documentation pages for design tokens, alias font and color tokens, color guidelines, border radius and accordion" loading="lazy"></figure>
     </section>
 
     <section class="prose phase" id="ds-expand">
       <h2 class="h5">Expand the System (2025)</h2>
       <p class="p2">Introduced multi-brand support, supported sub-brand development, and carried the system through the 2025 rebrand.</p>
-      <figure class="shot"><img src="img/ds-2025.gif" alt="Switching a button between brand themes such as HubSpot 2025, HubSpot 2022 and sub-brands from a brand menu" loading="lazy"></figure>
+      <figure class="shot"><img src="img/ds-2025.gif" width="1200" height="615" alt="Switching a button between brand themes such as HubSpot 2025, HubSpot 2022 and sub-brands from a brand menu" loading="lazy"></figure>
     </section>
 
     <section class="prose phase" id="ds-evolve">
       <h2 class="h5">Evolving the System (2026)</h2>
       <p class="p2">Built design system skills, migrated the design system to AI-driven tooling, and drove AI adoption across the design team.</p>
-      <figure class="shot"><img src="img/ds-2026.gif" alt="Walkthrough of the AI Tooling for UX site, including the AI Toolkit page listing Claude plugins and skills" loading="lazy"></figure>
-      <figure class="shot"><img src="img/ds-2026-plugin.jpg" alt="Marketing UX design toolkit plugin with eight skills for HubSpot CDS color, typography, icons, components, page auditing and research synthesis" loading="lazy"></figure>
+      <figure class="shot"><img src="img/ds-2026.gif" width="1000" height="546" alt="Walkthrough of the AI Tooling for UX site, including the AI Toolkit page listing Claude plugins and skills" loading="lazy"></figure>
+      <figure class="shot"><img src="img/ds-2026-plugin.jpg" width="1600" height="1063" alt="Marketing UX design toolkit plugin with eight skills for HubSpot CDS color, typography, icons, components, page auditing and research synthesis" loading="lazy"></figure>
     </section>
   </main>
 </article>
@@ -420,7 +443,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <header class="band cs-hero">
     <div class="wrap anim">
       <a class="back p3" href="#">← Back</a>
-      <h1 class="h4 strong">Resume</h1>
     </div>
   </header>
   <main class="wrap stack anim">
@@ -428,28 +450,28 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <h2 class="h5">Experience</h2>
       <div class="cv-list">
         <div class="cv-item">
-          <div class="cv-head"><h3 class="h5">HubSpot, Senior Product Designer</h3><p class="p3">01.2022 – Present</p></div>
+          <div class="cv-head"><div><h3 class="h5">HubSpot</h3><p class="h5">Senior Product Designer</p></div><p class="p3">2022 – Present</p></div>
           <ul>
-            <li class="p2">Led UX strategy and direction for Spotlight, HubSpot’s biannual product launch campaign, from planning to launch, partnering with SVP/VP leaders and cross-functional teams, contributing to an 87.9% increase in feature adoption across 20,616 portals within 30 days of the Spring 2026 launch.</li>
-            <li class="p2">Lead AI tooling for the UX team, building a shared plugin library and reusable Claude Code skills that turn one-off experiments into repeatable workflows.</li>
-            <li class="p2">Designed the Product Hub Page Overview Template with a product-first storytelling approach, lifting hub overview page traffic 22.5% and demos 25.1%, including 190% more demos on Data Hub.</li>
-            <li class="p2">Introduced a Design Tokens Foundation to the Marketing Design System, partnering with engineering on a migration to the new architecture and brand, reaching 100% adoption among developers and designers.</li>
-            <li class="p2">Proposed and shipped a foundational design system update enabling multi-brand support, applied across 12 sub-brands and directly supporting the HubSpot 2025 Rebrand.</li>
-            <li class="p2">Led the 0-1 design of a self-service AI assistant that recommends brand creative resources to marketers in 2024, with learnings that shaped later AI enablement for marketers.</li>
-            <li class="p2">Redesigned and A/B tested the login and sign up flow in 2023, increasing demo and sign up rates and estimated to deliver $1.2M+ ARR.</li>
+            <li class="p3">Led UX strategy and direction for Spotlight, HubSpot’s biannual product launch campaign, from planning to launch, partnering with SVP/VP leaders and cross-functional teams, contributing to an 87.9% increase in feature adoption across 20,616 portals within 30 days of the Spring 2026 launch.</li>
+            <li class="p3">Lead AI tooling for the UX team, building a shared plugin library and reusable Claude Code skills that turn one-off experiments into repeatable workflows.</li>
+            <li class="p3">Designed the Product Hub Page Overview Template with a product-first storytelling approach, lifting hub overview page traffic 22.5% and demos 25.1%, including 190% more demos on Data Hub.</li>
+            <li class="p3">Introduced a Design Tokens Foundation to the Marketing Design System, partnering with engineering on a migration to the new architecture and brand, reaching 100% adoption among developers and designers.</li>
+            <li class="p3">Proposed and shipped a foundational design system update enabling multi-brand support, applied across 12 sub-brands and directly supporting the HubSpot 2025 Rebrand.</li>
+            <li class="p3">Led the 0-1 design of a self-service AI assistant that recommends brand creative resources to marketers in 2024, with learnings that shaped later AI enablement for marketers.</li>
+            <li class="p3">Redesigned and A/B tested the login and sign up flow in 2023, increasing demo and sign up rates and estimated to deliver $1.2M+ ARR.</li>
           </ul>
         </div>
         <div class="cv-item">
-          <div class="cv-head"><h3 class="h5">Meijer, Product Designer</h3><p class="p3">05.2020 – 12.2022</p></div>
+          <div class="cv-head"><div><h3 class="h5">Meijer</h3><p class="h5">Product Designer</p></div><p class="p3">2020 – 2022</p></div>
           <ul>
-            <li class="p2">Introduced a Design Tokens Foundation and consolidated a multi-platform design system for web, iOS, and Android with developers, and coached designers and PMs on adopting it.</li>
-            <li class="p2">Standardized the UX onboarding process, improving cross-team communication and collaboration workflows.</li>
+            <li class="p3">Introduced a Design Tokens Foundation and consolidated a multi-platform design system for web, iOS, and Android with developers, and coached designers and PMs on adopting it.</li>
+            <li class="p3">Standardized the UX onboarding process, improving cross-team communication and collaboration workflows.</li>
           </ul>
         </div>
         <div class="cv-item">
-          <div class="cv-head"><h3 class="h5">Amazon Web Services, Product Design Intern</h3><p class="p3">08.2019 – 12.2019</p></div>
+          <div class="cv-head"><div><h3 class="h5">Amazon Web Services</h3><p class="h5">Product Design Intern</p></div><p class="p3">2019</p></div>
           <ul>
-            <li class="p2">Designed detailed interaction and user experience for web components for the Cloudscape Design System. Close collaboration with developers.</li>
+            <li class="p3">Designed detailed interaction and user experience for web components for the Cloudscape Design System. Close collaboration with developers.</li>
           </ul>
         </div>
       </div>
@@ -459,8 +481,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="cv-list">
         <div class="cv-item">
           <h3 class="h5">University of Michigan</h3>
-          <div class="cv-head"><p class="p2">M.S. Human Computer Interaction</p><p class="p3">05.2020</p></div>
-          <div class="cv-head"><p class="p2">B.S. Architecture</p><p class="p3">05.2017</p></div>
+          <div class="cv-head"><p class="p3">M.S. Human Computer Interaction</p><p class="p3">2020</p></div>
+          <div class="cv-head"><p class="p3">B.S. Architecture</p><p class="p3">2017</p></div>
         </div>
       </div>
     </section>
@@ -469,11 +491,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="cv-list">
         <div class="cv-item">
           <h3 class="h5">Specialized in</h3>
-          <p class="p2">Design system, AI assisted prototyping, AI agent experience, AI design pattern, branding, Figma, Claude Code, Cursor</p>
+          <p class="p3">Design system, AI assisted prototyping, AI agent experience, AI design pattern, branding, Figma, Claude Code, Cursor</p>
         </div>
         <div class="cv-item">
           <h3 class="h5">Strategy and Leadership</h3>
-          <p class="p2">Design strategy, product thinking, system thinking, design workshop, design enablement, project management, cross-functional collaboration</p>
+          <p class="p3">Design strategy, product thinking, system thinking, design workshop, design enablement, project management, cross-functional collaboration</p>
         </div>
       </div>
     </section>
@@ -556,6 +578,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   }
   window.addEventListener("hashchange", function () { show(); save(); });
   show();
+  var nav = document.querySelector(".topnav"), menuBtn = document.getElementById("menu-btn");
+  function setMenu(open) { nav.classList.toggle("open", open); menuBtn.setAttribute("aria-expanded", open ? "true" : "false"); }
+  menuBtn.addEventListener("click", function () { setMenu(!nav.classList.contains("open")); });
+  nav.querySelectorAll("#nav-list a").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+  document.addEventListener("click", function (e) { if (!nav.contains(e.target)) setMenu(false); });
   if (restoreY) requestAnimationFrame(function () { window.scrollTo({ top: restoreY, behavior: "instant" }); });
   var saveTimer;
   window.addEventListener("scroll", function () { clearTimeout(saveTimer); saveTimer = setTimeout(save, 200); }, { passive: true });
