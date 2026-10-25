@@ -101,6 +101,56 @@ a.row:hover { background: var(--hover); }
 .go { display: inline-block; margin-left: 8px; transition: transform .2s ease; }
 a.row:hover .go { transform: translateX(6px); }
 @media (max-width: 560px) { .row { grid-template-columns: 1fr; } .row .m { order: -1; } }
+/* City line drawings: transparent line art */
+.city-grid { display: grid; grid-template-columns: 1fr; gap: 64px; }
+@media (max-width: 640px) { .city-grid { gap: 48px; } }
+.city-grid img { width: 100%; max-width: 301px; height: auto; justify-self: center; } /* native size keeps every drawing at the same scale */
+.city-grid .wide { max-width: 527px; }
+/* Slide decks shown as a stack of full-width images */
+.slides { display: grid; gap: 48px; }
+@media (max-width: 640px) { .slides { gap: 32px; } }
+.slides img { width: 100%; height: auto; display: block; border-radius: 4px; }
+/* Editorial image layout: asymmetric pair, captions, and a figure that breaks out of the text column */
+.ed-fig { display: grid; gap: 12px; margin: 0; }
+.ed-fig figcaption { color: var(--text-02); }
+.ed-pair { display: grid; grid-template-columns: 1fr; gap: 144px; }
+.ed-wide { margin-top: 48px; } /* pair-to-menu gap matches the pair gap */
+.ed-fig { justify-items: center; text-align: center; }
+.ed-pair img { width: 100%; height: auto; }
+.ed-pair .ed-fig:first-child img { max-width: 360px; }
+.ed-pair .ed-fig:last-child img { max-width: 275px; }
+.ed-fig .idx { color: var(--text-01); margin-right: 12px; }
+.ed-wide img { width: 100%; height: auto; display: block; border-radius: 4px; }
+@media (max-width: 640px) { .ed-pair { gap: 96px; } .ed-wide { margin-top: 32px; } }
+.outlined { border: 1px solid var(--line); }
+/* Clay arch: large photo, description and smaller sketch beside it */
+.arch { display: grid; grid-template-columns: 3fr 2fr; gap: 80px; }
+.arch img { width: 100%; height: auto; display: block; border-radius: 4px; }
+.arch-sketch { display: flex; flex-direction: column; justify-content: space-between; gap: 64px; } /* description at top, sketch on the photo's bottom edge */
+@media (max-width: 560px) { .arch { grid-template-columns: 1fr; gap: 64px; } }
+/* Clay gallery: uniform tiles that open a full-size viewer */
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.gallery .tile { display: block; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 4px; overflow: hidden; }
+.gallery .tile img { display: block; width: 100%; height: auto; aspect-ratio: 7 / 5; object-fit: cover; transition: transform .3s ease; }
+.gallery .tile:hover img { transform: scale(1.02); }
+@media (max-width: 640px) { .gallery { gap: 12px; } }
+.lightbox { position: fixed; inset: 0; z-index: 50; display: grid; grid-template-rows: 1fr auto; gap: 16px; padding: 24px 16px; background: var(--bg-01); }
+.lightbox[hidden] { display: none; }
+.lightbox img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.lb-bar { display: flex; justify-content: center; align-items: center; gap: 24px; color: var(--text-02); }
+.lb-bar button { background: none; border: 0; padding: 12px 8px; font: inherit; letter-spacing: inherit; color: var(--text-01); cursor: pointer; }
+.lb-bar button:disabled { color: var(--text-02); opacity: .4; cursor: default; }
+/* Previous / next project */
+.pn { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-inline: -16px; }
+.pn a { display: grid; gap: 8px; align-content: start; padding: 16px; border-radius: 12px; color: var(--text-01); text-decoration: none; }
+.pn a:hover { background: var(--hover); }
+.pn .lbl { color: var(--text-02); }
+.pn .nx { grid-column: 2; justify-items: end; text-align: right; }
+.pn .go { margin: 0 8px 0 0; }
+.pn .nx .go { margin: 0 0 0 8px; }
+.pn .pv:hover .go { transform: translateX(-6px); }
+.pn .nx:hover .go { transform: translateX(6px); }
+@media (max-width: 640px) { .pn { gap: 8px; } }
 
 /* Experience */
 .exp { display: grid; }
@@ -294,21 +344,39 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <main class="wrap stack anim">
     <section id="now" aria-labelledby="h-now">
       <div class="sec-head"><h2 class="h5" id="h-now">Now</h2></div>
-      <p class="p2">I work on Digital Experience team at HubSpot, where I create delightful experiences and flexible systems that make room for creativity.</p>
+      <p class="p2">I work on the Digital Experience team at HubSpot, where I create delightful experiences and flexible systems that make room for creativity.</p>
       <p class="links p2"><a href="#how-i-work">How I work →</a></p>
     </section>
 
     <section id="work" aria-labelledby="h-work">
-      <div class="sec-head"><h2 class="h5" id="h-work">Projects</h2></div>
+      <div class="sec-head"><h2 class="h5" id="h-work">User experience</h2></div>
       <div class="rows">
         <a class="row" href="#spotlight">
           <span class="h5">HubSpot global launch event: Spotlight<span class="go" aria-hidden="true">→</span></span>
         </a>
         <a class="row" href="#design-system">
-          <span class="h5">Design system evolution for Digital Experience<span class="go" aria-hidden="true">→</span></span>
+          <span class="h5">Design system evolution for digital experience<span class="go" aria-hidden="true">→</span></span>
         </a>
         <a class="row" href="#csol-assistant">
           <span class="h5">AI assistant for marketers<span class="go" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section id="visual" aria-labelledby="h-visual">
+      <div class="sec-head"><h2 class="h5" id="h-visual">Visual and handmade</h2></div>
+      <div class="rows">
+        <a class="row" href="#city-line-drawing">
+          <span class="h5">City line drawing<span class="go" aria-hidden="true">→</span></span>
+        </a>
+        <a class="row" href="#shechill-patisserie">
+          <span class="h5">SheChill Patisserie branding<span class="go" aria-hidden="true">→</span></span>
+        </a>
+        <a class="row" href="#peacock-revolution">
+          <span class="h5">Peacock Revolution branding<span class="go" aria-hidden="true">→</span></span>
+        </a>
+        <a class="row" href="#design-with-clay">
+          <span class="h5">Design with clay<span class="go" aria-hidden="true">→</span></span>
         </a>
       </div>
     </section>
@@ -380,6 +448,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
     <figure class="shot"><img src="img/spotlight-fall26.jpg" width="1440" height="800" alt="Fall 2026 Spotlight hero: Growth context knows your business, with customer, team and business context cards" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight" target="_blank" rel="noopener">View site →</a></figcaption></figure>
     <figure class="shot"><img src="img/spotlight-spring26.jpg" width="1600" height="900" alt="Spring 2026 Spotlight desktop page: The context advantage, with goal navigation, update carousel and video" loading="lazy"><figcaption class="links p2"><a href="https://www.hubspot.com/spotlight/spring2026?hubs_content=www.hubspot.com%2Fspotlight&amp;hubs_content-cta=editions-menu-link" target="_blank" rel="noopener">View site →</a></figcaption></figure>
+    <nav class="pn" aria-label="More projects">
+      <a class="nx" href="#design-system"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">Design system evolution for digital experience</span></a>
+    </nav>
   </main>
 </article>
 
@@ -388,7 +459,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <header class="band cs-hero">
     <div class="wrap anim">
       <a class="back p3" href="#">← Back</a>
-      <h1 class="h4 strong">Design system evolution for Digital Experience</h1>
+      <h1 class="h4 strong">Design system evolution for digital experience</h1>
       <p class="p2 lead">Grow the design system from an initial build into a multi-brand platform, and most recently into AI-driven tooling that helps the design team work faster and more consistently.</p>
     </div>
   </header>
@@ -418,6 +489,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <figure class="shot"><img src="img/ds-2026.gif" width="1000" height="546" alt="Walkthrough of the AI Tooling for UX site, including the AI Toolkit page listing Claude plugins and skills" loading="lazy"></figure>
       <figure class="shot"><img src="img/ds-2026-plugin.jpg" width="1600" height="1063" alt="Marketing UX design toolkit plugin with eight skills for HubSpot CDS color, typography, icons, components, page auditing and research synthesis" loading="lazy"></figure>
     </section>
+    <nav class="pn" aria-label="More projects">
+      <a class="pv" href="#spotlight"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">HubSpot global launch event: Spotlight</span></a>
+      <a class="nx" href="#csol-assistant"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">AI assistant for marketers</span></a>
+    </nav>
   </main>
 </article>
 
@@ -437,7 +512,137 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div><dt class="p2">Timeline</dt><dd class="p2">2023</dd></div>
     </dl>
 
-    <figure class="shot"><img src="img/csol-assistant.gif" width="900" height="849" alt="CSOL Assistant answering a request with matching landing page and campaign resources, plus page details" loading="lazy"><figcaption class="links p2"><a href="https://www.figma.com/deck/CZ8lhpZUTxhTEMc9jXdN1W" target="_blank" rel="noopener">See details →</a></figcaption></figure>
+    <figure class="shot"><img class="outlined" src="img/csol-assistant.gif" width="900" height="849" alt="CSOL Assistant answering a request with matching landing page and campaign resources, plus page details" loading="lazy"><figcaption class="links p2"><a href="https://www.figma.com/deck/CZ8lhpZUTxhTEMc9jXdN1W" target="_blank" rel="noopener">See details →</a></figcaption></figure>
+    <nav class="pn" aria-label="More projects">
+      <a class="pv" href="#design-system"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">Design system evolution for digital experience</span></a>
+      <a class="nx" href="#city-line-drawing"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">City line drawing</span></a>
+    </nav>
+  </main>
+</article>
+
+<!-- ========== VISUAL: CITY LINE DRAWING ========== -->
+<article class="view" id="v-city-line-drawing" hidden>
+  <header class="band cs-hero">
+    <div class="wrap anim">
+      <a class="back p3" href="#">← Back</a>
+      <h1 class="h4 strong">City line drawing</h1>
+    </div>
+  </header>
+  <main class="wrap stack anim">
+    <div class="city-grid">
+      <img src="img/city-matera.webp" width="301" height="301" alt="Line drawing of Matera cave houses and stairways, labeled MATERA" loading="lazy">
+      <img src="img/city-pompeii.webp" width="301" height="301" alt="Line drawing of Pompeii ruined columns, labeled POMPEII" loading="lazy">
+      <img class="wide" src="img/city-porto.webp" width="526" height="301" alt="Line drawing of Porto skyline with the Dom Luís I bridge, labeled PORTO" loading="lazy">
+      <img src="img/city-amalfi.webp" width="301" height="301" alt="Line drawing of Amalfi coast cliffside town with boats, labeled AMALFI" loading="lazy">
+      <img src="img/city-alberobello.webp" width="301" height="301" alt="Line drawing of Alberobello trullo house, labeled ALBEROBELLO" loading="lazy">
+      <img class="wide" src="img/city-budapest.webp" width="527" height="301" alt="Line drawing of Budapest suspension bridge over the Danube, labeled BUDAPEST" loading="lazy">
+      <img src="img/city-rome.webp" width="301" height="301" alt="Line drawing of Rome Colosseum, labeled ROME" loading="lazy">
+      <img src="img/city-berlin.webp" width="301" height="301" alt="Line drawing of Berlin TV tower, labeled BERLIN" loading="lazy">
+    </div>
+    <nav class="pn" aria-label="More visual projects">
+      <a class="pv" href="#csol-assistant"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">AI assistant for marketers</span></a>
+      <a class="nx" href="#shechill-patisserie"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">SheChill Patisserie branding</span></a>
+    </nav>
+  </main>
+</article>
+
+<!-- ========== VISUAL: SHECHILL PATISSERIE BRANDING ========== -->
+<article class="view" id="v-shechill-patisserie" hidden>
+  <header class="band cs-hero">
+    <div class="wrap anim">
+      <a class="back p3" href="#">← Back</a>
+      <h1 class="h4 strong">SheChill Patisserie branding</h1>
+    </div>
+  </header>
+  <main class="wrap stack anim">
+    <div class="ed-pair">
+      <figure class="ed-fig"><img src="img/shechill-ring.webp" width="519" height="506" alt="SheChill patisserie logo inside a ring of hand-drawn baking illustrations" loading="lazy"></figure>
+      <figure class="ed-fig"><img src="img/shechill-logo.webp" width="275" height="100" alt="SheChill patisserie wordmark in black" loading="lazy"></figure>
+    </div>
+    <figure class="ed-fig ed-wide"><img src="img/shechill-menu.webp" width="1600" height="1035" alt="SheChill full menu with signature drinks, coffee, non-coffee, croissants, bread, cakes and pastries" loading="lazy"></figure>
+    <nav class="pn" aria-label="More visual projects">
+      <a class="pv" href="#city-line-drawing"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">City line drawing</span></a>
+      <a class="nx" href="#peacock-revolution"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">Peacock Revolution branding</span></a>
+    </nav>
+  </main>
+</article>
+
+<!-- ========== VISUAL: PEACOCK REVOLUTION BRANDING ========== -->
+<article class="view" id="v-peacock-revolution" hidden>
+  <header class="band cs-hero">
+    <div class="wrap anim">
+      <a class="back p3" href="#">← Back</a>
+      <h1 class="h4 strong">Peacock Revolution branding</h1>
+    </div>
+  </header>
+  <main class="wrap stack anim">
+    <div class="slides">
+      <img src="img/peacock-01.webp" width="1600" height="900" alt="Cover: Peacock Revolution logo, a brand guideline by Kaiqi Zhu" loading="lazy">
+      <img src="img/peacock-02.webp" width="1600" height="900" alt="Brand voice concept built around the pearl" loading="lazy">
+      <img src="img/peacock-03.webp" width="1600" height="900" alt="Logo structure: construction circles over the symbol" loading="lazy">
+      <img src="img/peacock-04.webp" width="1600" height="900" alt="Logo structure: alternate construction grid" loading="lazy">
+      <img src="img/peacock-05.webp" width="1600" height="900" alt="Symbol in light on dark" loading="lazy">
+      <img src="img/peacock-06.webp" width="1600" height="900" alt="Symbol in dark on light" loading="lazy">
+      <img src="img/peacock-07.webp" width="1600" height="900" alt="Wordmark construction circles" loading="lazy">
+      <img src="img/peacock-08.webp" width="1600" height="900" alt="Wordmark in light on dark" loading="lazy">
+      <img src="img/peacock-09.webp" width="1600" height="900" alt="Wordmark in dark on light" loading="lazy">
+      <img src="img/peacock-10.webp" width="1600" height="900" alt="Full mark in light on dark" loading="lazy">
+      <img src="img/peacock-11.webp" width="1600" height="900" alt="Full mark in dark on light" loading="lazy">
+      <img src="img/peacock-12.webp" width="1600" height="900" alt="Color palette of five neutrals" loading="lazy">
+      <img src="img/peacock-13.webp" width="1600" height="900" alt="Poster: symbol over a black and white peacock photo" loading="lazy">
+      <img src="img/peacock-14.webp" width="1600" height="900" alt="Poster: full mark over a close-up of chain links" loading="lazy">
+      <img src="img/peacock-15.webp" width="1600" height="900" alt="WeChat account examples" loading="lazy">
+      <img src="img/peacock-16.webp" width="1600" height="900" alt="Shopping bag mockups in white and black" loading="lazy">
+      <img src="img/peacock-17.webp" width="1600" height="900" alt="Symbol on white" loading="lazy">
+    </div>
+    <nav class="pn" aria-label="More visual projects">
+      <a class="pv" href="#shechill-patisserie"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">SheChill Patisserie branding</span></a>
+      <a class="nx" href="#design-with-clay"><span class="p3 lbl">Next<span class="go" aria-hidden="true">→</span></span><span class="h6">Design with clay</span></a>
+    </nav>
+  </main>
+</article>
+
+<!-- ========== VISUAL: DESIGN WITH CLAY ========== -->
+<article class="view" id="v-design-with-clay" hidden>
+  <header class="band cs-hero">
+    <div class="wrap anim">
+      <a class="back p3" href="#">← Back</a>
+      <h1 class="h4 strong">Design with clay</h1>
+    </div>
+  </header>
+  <main class="wrap stack anim">
+    <div class="arch">
+      <img src="img/clay-arch.jpg" width="1279" height="1706" alt="Handmade clay arch in a fish tank, with small fish swimming through it">
+      <div class="arch-sketch">
+        <p class="p3">Inspired by Delicate Arch in Utah, this handmade clay piece brings a natural landmark into the tank. Its layered, rippled surface and open arch give catfish and loaches shaded hollows to rest and explore, with an open base for easy movement near the substrate.</p>
+        <img src="img/clay-arch-sketch.jpg" width="1400" height="1691" alt="Pen sketch of the fish tank plan: front and top views, arch detail and lighting">
+      </div>
+    </div>
+    <div class="gallery" id="clay-gallery">
+      <button class="tile" type="button" data-full="img/clay-01-lg.jpg" aria-label="Open photo 1 of 20: Cream footed bowl with a striped foot"><img src="img/clay-01.jpg" width="800" height="572" alt="Cream footed bowl with a striped foot" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-02-lg.jpg" aria-label="Open photo 2 of 20: Cream footed bowl tilted, holding pebbles"><img src="img/clay-02.jpg" width="800" height="572" alt="Cream footed bowl tilted, holding pebbles" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-03-lg.jpg" aria-label="Open photo 3 of 20: Glazed cup with a loop handle, side view"><img src="img/clay-03.jpg" width="800" height="572" alt="Glazed cup with a loop handle, side view" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-04-lg.jpg" aria-label="Open photo 4 of 20: Glazed cup from above, with a blue drip inside"><img src="img/clay-04.jpg" width="800" height="572" alt="Glazed cup from above, with a blue drip inside" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-06-lg.jpg" aria-label="Open photo 5 of 20: Brown mug with a beaver and &quot;It&#x27;s just one dam project after another&quot;"><img src="img/clay-06.jpg" width="800" height="533" alt="Brown mug with a beaver and &quot;It&#x27;s just one dam project after another&quot;" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-07-lg.jpg" aria-label="Open photo 6 of 20: Beaver mug on its side"><img src="img/clay-07.jpg" width="800" height="571" alt="Beaver mug on its side" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-09-lg.jpg" aria-label="Open photo 7 of 20: Hand-built coiled vase in purple-brown clay"><img src="img/clay-09.jpg" width="800" height="571" alt="Hand-built coiled vase in purple-brown clay" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-10-lg.jpg" aria-label="Open photo 8 of 20: Coiled vase, another angle"><img src="img/clay-10.jpg" width="800" height="572" alt="Coiled vase, another angle" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-11-lg.jpg" aria-label="Open photo 9 of 20: Pink ceramic house with a brown dotted roof, front"><img src="img/clay-11.jpg" width="800" height="572" alt="Pink ceramic house with a brown dotted roof, front" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-12-lg.jpg" aria-label="Open photo 10 of 20: Pink ceramic house, three-quarter view"><img src="img/clay-12.jpg" width="800" height="572" alt="Pink ceramic house, three-quarter view" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-13-lg.jpg" aria-label="Open photo 11 of 20: Pink ceramic house, side with chimney"><img src="img/clay-13.jpg" width="800" height="572" alt="Pink ceramic house, side with chimney" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-14-lg.jpg" aria-label="Open photo 12 of 20: Pink ceramic house, back"><img src="img/clay-14.jpg" width="800" height="572" alt="Pink ceramic house, back" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-15-lg.jpg" aria-label="Open photo 13 of 20: Pink ceramic house, gable end with chimney"><img src="img/clay-15.jpg" width="800" height="572" alt="Pink ceramic house, gable end with chimney" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-16-lg.jpg" aria-label="Open photo 14 of 20: Pink ceramic house, other gable end"><img src="img/clay-16.jpg" width="800" height="571" alt="Pink ceramic house, other gable end" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-17-lg.jpg" aria-label="Open photo 15 of 20: White ceramic house with a coiled thatch roof, front"><img src="img/clay-17.jpg" width="800" height="572" alt="White ceramic house with a coiled thatch roof, front" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-18-lg.jpg" aria-label="Open photo 16 of 20: White ceramic house, open side"><img src="img/clay-18.jpg" width="800" height="572" alt="White ceramic house, open side" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-20-lg.jpg" aria-label="Open photo 17 of 20: White jar with a pouring lip and swirled clay"><img src="img/clay-20.jpg" width="800" height="572" alt="White jar with a pouring lip and swirled clay" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-21-lg.jpg" aria-label="Open photo 18 of 20: White jar from above"><img src="img/clay-21.jpg" width="800" height="571" alt="White jar from above" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-22-lg.jpg" aria-label="Open photo 19 of 20: Amber sake set: pitcher and two cups"><img src="img/clay-22.jpg" width="800" height="571" alt="Amber sake set: pitcher and two cups" loading="lazy"></button>
+      <button class="tile" type="button" data-full="img/clay-23-lg.jpg" aria-label="Open photo 20 of 20: Amber sake pitcher"><img src="img/clay-23.jpg" width="800" height="572" alt="Amber sake pitcher" loading="lazy"></button>
+    </div>
+    <nav class="pn" aria-label="More visual projects">
+      <a class="pv" href="#peacock-revolution"><span class="p3 lbl"><span class="go" aria-hidden="true">←</span>Previous</span><span class="h6">Peacock Revolution branding</span></a>
+    </nav>
   </main>
 </article>
 
@@ -532,17 +737,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </main>
 </article>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <img id="lb-img" alt="">
+  <div class="lb-bar p3"><button type="button" id="lb-prev" aria-label="Previous photo">←</button><span id="lb-count">1 / 1</span><button type="button" id="lb-next" aria-label="Next photo">→</button><button type="button" id="lb-close">Close</button></div>
+</div>
+
 <div class="toast p2" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function () {
-  var views = { "": "v-home", "spotlight": "v-spotlight", "design-system": "v-design-system", "csol-assistant": "v-csol-assistant", "how-i-work": "v-how-i-work", "resume": "v-resume" };
-  var sections = ["about", "work", "testimonials", "life"];
-  var first = true, current = null;
+  var views = { "": "v-home", "spotlight": "v-spotlight", "design-system": "v-design-system", "csol-assistant": "v-csol-assistant", "how-i-work": "v-how-i-work", "resume": "v-resume", "city-line-drawing": "v-city-line-drawing", "shechill-patisserie": "v-shechill-patisserie", "peacock-revolution": "v-peacock-revolution", "design-with-clay": "v-design-with-clay" };
+  var sections = ["about", "work", "visual", "testimonials", "life"];
+  var first = true, current = null, homeY = null;
   function show() {
     var hash = (location.hash || "").replace("#", "");
     var section = sections.indexOf(hash) > -1 ? hash : null;
     var key = views[hash] ? hash : "";
+    var back = null;
+    if (current === "" && key !== "") homeY = window.scrollY; // leaving home: remember where we were
+    if (current !== null && current !== "" && key === "" && homeY !== null) back = homeY;
     if (key !== current) {
       Object.keys(views).forEach(function (k) {
         var el = document.getElementById(views[k]);
@@ -556,6 +769,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       var target = document.getElementById(section);
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       requestAnimationFrame(function () { if (section === "about") { window.scrollTo({ top: 0, behavior: first || reduce ? "instant" : "smooth" }); return; } target.scrollIntoView({ behavior: first || reduce ? "instant" : "smooth", block: "start" }); });
+    } else if (back !== null) {
+      requestAnimationFrame(function () { window.scrollTo({ top: back, behavior: "instant" }); }); // back to home: return to the earlier scroll position
     } else if (!first) {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
@@ -592,6 +807,31 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   window.addEventListener("scroll", function () { clearTimeout(saveTimer); saveTimer = setTimeout(save, 200); }, { passive: true });
   save();
 
+  // Clay gallery viewer
+  var tiles = Array.prototype.slice.call(document.querySelectorAll("#clay-gallery .tile"));
+  var lb = document.getElementById("lightbox"), lbImg = document.getElementById("lb-img"), lbCount = document.getElementById("lb-count");
+  var lbPrev = document.getElementById("lb-prev"), lbNext = document.getElementById("lb-next"), lbClose = document.getElementById("lb-close");
+  var lbIdx = 0, lbOpener = null;
+  function lbShow(i) {
+    lbIdx = i; var t = tiles[i];
+    lbImg.src = t.getAttribute("data-full"); lbImg.alt = t.querySelector("img").alt;
+    lbCount.textContent = (i + 1) + " / " + tiles.length;
+    lbPrev.disabled = i === 0; lbNext.disabled = i === tiles.length - 1;
+  }
+  function lbOpen(i) { lbOpener = tiles[i]; lbShow(i); lb.hidden = false; document.body.style.overflow = "hidden"; lbClose.focus(); }
+  function lbHide() { lb.hidden = true; document.body.style.overflow = ""; if (lbOpener) lbOpener.focus(); }
+  tiles.forEach(function (t, i) { t.addEventListener("click", function () { lbOpen(i); }); });
+  lbPrev.addEventListener("click", function () { if (lbIdx > 0) lbShow(lbIdx - 1); });
+  lbNext.addEventListener("click", function () { if (lbIdx < tiles.length - 1) lbShow(lbIdx + 1); });
+  lbClose.addEventListener("click", lbHide);
+  lb.addEventListener("click", function (e) { if (e.target === lb || e.target === lbImg) lbHide(); });
+  document.addEventListener("keydown", function (e) {
+    if (lb.hidden) return;
+    if (e.key === "Escape") lbHide();
+    if (e.key === "ArrowLeft" && lbIdx > 0) lbShow(lbIdx - 1);
+    if (e.key === "ArrowRight" && lbIdx < tiles.length - 1) lbShow(lbIdx + 1);
+  });
+  window.addEventListener("hashchange", function () { if (!lb.hidden) lbHide(); });
   var track = document.getElementById("quote-track");
   var prev = document.getElementById("quote-prev"), next = document.getElementById("quote-next"), count = document.getElementById("quote-count");
   var total = track.children.length;
